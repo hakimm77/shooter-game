@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ChakraProvider, extendTheme, Flex } from "@chakra-ui/react";
 import GameScreen from "./screens/GameScreen";
+import { PlayerType } from "./types";
 
 const theme = extendTheme({
   styles: {
     global: {
       body: {
-        bg: "#727272",
         userSelect: "none",
       },
     },
