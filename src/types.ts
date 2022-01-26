@@ -4,4 +4,5 @@ export interface PlayerType {
   y: number;
   direction: number;
   fire: boolean;
+  health: number;
 }

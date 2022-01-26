@@ -72,6 +72,28 @@ const GameScreen = () => {
           break;
         case 32:
           console.log("space bar");
+          socket.emit(
+            "update-client",
+            Object.assign([...players], {
+              [playerIndex]: {
+                ...players[playerIndex],
+                fire: true,
+              },
+            })
+          );
+
+          setTimeout(() => {
+            socket.emit(
+              "update-client",
+              Object.assign([...players], {
+                [playerIndex]: {
+                  ...players[playerIndex],
+                  fire: false,
+                },
+              })
+            );
+          }, 80);
+
           break;
       }
     }
@@ -81,7 +103,14 @@ const GameScreen = () => {
     if (userName) {
       setLoading(true);
 
-      socket.emit("new-user", { name: userName, x: 100, y: 100, direction: 0 });
+      socket.emit("new-user", {
+        name: userName,
+        x: 100,
+        y: 100,
+        direction: 0,
+        fire: false,
+        health: 100,
+      });
       setBegin(true);
       setLoading(false);
     }
@@ -113,21 +142,47 @@ const GameScreen = () => {
               alignItems="center"
             >
               <Flex
-                backgroundColor="rgba(0, 0, 0, 0.5)"
-                margin={2}
-                padding={0.5}
+                flexDir="column"
+                justifyContent="center"
+                alignItems="center"
               >
-                <Text color="white" fontSize={15}>
-                  {player.name}
-                </Text>
-              </Flex>
+                <Flex
+                  backgroundColor="rgba(0, 0, 0, 0.5)"
+                  padding={0.5}
+                  margin={2}
+                  justifyContent="center"
+                >
+                  <Text color="white" fontSize={15}>
+                    {player.name}
+                  </Text>
+                </Flex>
 
-              <Image
-                w={10}
-                h={10}
-                src={require("../assets/player-image.png")}
-                transform={`rotate(${player.direction}turn)`}
-              />
+                <Flex w={70} h={1} border="0.2px solid #000" mb={2}>
+                  <Flex w={`${player.health}%`} backgroundColor="red" />
+                </Flex>
+
+                <Flex
+                  transform={`rotate(${player.direction}turn)`}
+                  flexDir="column-reverse"
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  <Image
+                    zIndex={2}
+                    w={10}
+                    h={10}
+                    src={require("../assets/player-image.png")}
+                  />
+                  {player.fire && (
+                    <Flex
+                      position="absolute"
+                      w="0.5px"
+                      h={250}
+                      bgColor="#fff"
+                    />
+                  )}
+                </Flex>
+              </Flex>
             </Flex>
           ))}
         </Flex>
