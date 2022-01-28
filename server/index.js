@@ -1,28 +1,17 @@
-const app = require("express")();
-const http = require("http");
-const server = http.createServer(app);
+const express = require("express");
+const app = express();
+const server = require("http").Server(app);
 const io = require("socket.io")(server);
+const path = require("path");
 
-interface PlayerType {
-  name: string;
-  x: number;
-  y: number;
-  direction: number;
-  fire: boolean;
-  health: number;
-  id: string;
-}
+app.use(express.static(path.join(__dirname, "../build")));
 
-app.get("/", (req: any, res: any) => {
-  res.json("hello world !");
-});
+let players = [];
 
-let players: Array<PlayerType> = [];
-
-io.on("connection", (socket: any) => {
+io.on("connection", (socket) => {
   console.log("a user connected");
 
-  socket.on("update-client", async (res: any) => {
+  socket.on("update-client", async (res) => {
     players = await res;
 
     players.forEach((player) => {
@@ -34,7 +23,7 @@ io.on("connection", (socket: any) => {
     io.emit("update-players", players);
   });
 
-  socket.on("new-user", (res: any) => {
+  socket.on("new-user", (res) => {
     players.push({ ...res, id: socket.id });
 
     io.emit("update-players", players);
