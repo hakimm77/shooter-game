@@ -24,11 +24,7 @@ const GameScreen = () => {
         x: 100,
         y: 100,
         direction: 0,
-        fire: {
-          x: 100,
-          y: 100,
-          isFired: false,
-        },
+        fire: false,
         health: 100,
       });
       setBegin(true);

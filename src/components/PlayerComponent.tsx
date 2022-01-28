@@ -153,13 +153,7 @@ const PlayerComponent: React.FC<{
             src={require("../assets/player-image.png")}
           />
           {player.fire && (
-            <Flex
-              display={player.fire ? "flex" : "none"}
-              position="absolute"
-              w="0.5px"
-              h={250}
-              bgColor="#fff"
-            />
+            <Flex position="absolute" w="0.5px" h={250} bgColor="#fff" />
           )}
         </Flex>
       </Flex>
