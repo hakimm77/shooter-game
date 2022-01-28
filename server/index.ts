@@ -12,9 +12,16 @@ let players = [];
 io.on("connection", (socket) => {
   console.log("a user connected");
 
-  socket.on("update-client", (res) => {
-    players = res;
-    io.emit("update-players", res);
+  socket.on("update-client", async (res) => {
+    players = await res;
+
+    players.forEach((player) => {
+      if (player.health <= 0) {
+        io.emit("player-lost", player.name);
+      }
+    });
+
+    io.emit("update-players", players);
   });
 
   socket.on("new-user", (res) => {
