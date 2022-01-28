@@ -3,10 +3,6 @@ export interface PlayerType {
   x: number;
   y: number;
   direction: number;
-  fire: {
-    x: number;
-    y: number;
-    isFired: boolean;
-  };
+  fire: boolean;
   health: number;
 }

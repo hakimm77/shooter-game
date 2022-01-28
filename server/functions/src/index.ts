@@ -3,16 +3,26 @@ const http = require("http");
 const server = http.createServer(app);
 const io = require("socket.io")(server);
 
-app.get("/", (req, res) => {
+interface PlayerType {
+  name: string;
+  x: number;
+  y: number;
+  direction: number;
+  fire: boolean;
+  health: number;
+  id: string;
+}
+
+app.get("/", (req: any, res: any) => {
   res.json("hello world !");
 });
 
-let players = [];
+let players: Array<PlayerType> = [];
 
-io.on("connection", (socket) => {
+io.on("connection", (socket: any) => {
   console.log("a user connected");
 
-  socket.on("update-client", async (res) => {
+  socket.on("update-client", async (res: any) => {
     players = await res;
 
     players.forEach((player) => {
@@ -24,7 +34,7 @@ io.on("connection", (socket) => {
     io.emit("update-players", players);
   });
 
-  socket.on("new-user", (res) => {
+  socket.on("new-user", (res: any) => {
     players.push({ ...res, id: socket.id });
 
     io.emit("update-players", players);

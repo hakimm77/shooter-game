@@ -22,10 +22,6 @@ const PlayerComponent: React.FC<{
               ...players[playerIndex],
               y: players[playerIndex].y - 10,
               direction: 0,
-              fire: {
-                ...players[playerIndex].fire,
-                y: players[playerIndex].fire.y - 10,
-              },
             },
           })
         );
@@ -40,10 +36,6 @@ const PlayerComponent: React.FC<{
               ...players[playerIndex],
               y: players[playerIndex].y + 10,
               direction: 0.5,
-              fire: {
-                ...players[playerIndex].fire,
-                y: players[playerIndex].fire.y + 10,
-              },
             },
           })
         );
@@ -57,10 +49,6 @@ const PlayerComponent: React.FC<{
               ...players[playerIndex],
               x: players[playerIndex].x + 10,
               direction: 0.25,
-              fire: {
-                ...players[playerIndex].fire,
-                x: players[playerIndex].fire.x + 10,
-              },
             },
           })
         );
@@ -74,10 +62,6 @@ const PlayerComponent: React.FC<{
               ...players[playerIndex],
               x: players[playerIndex].x - 10,
               direction: -0.25,
-              fire: {
-                ...players[playerIndex].fire,
-                x: players[playerIndex].fire.x - 10,
-              },
             },
           })
         );
@@ -88,10 +72,7 @@ const PlayerComponent: React.FC<{
           Object.assign([...players], {
             [playerIndex]: {
               ...players[playerIndex],
-              fire: {
-                ...players[playerIndex].fire,
-                isFired: true,
-              },
+              fire: true,
             },
           })
         );
@@ -102,10 +83,7 @@ const PlayerComponent: React.FC<{
             Object.assign([...players], {
               [playerIndex]: {
                 ...players[playerIndex],
-                fire: {
-                  ...players[playerIndex].fire,
-                  isFired: false,
-                },
+                fire: false,
               },
             })
           );
@@ -121,10 +99,7 @@ const PlayerComponent: React.FC<{
                   Object.assign([...players], {
                     [playerIndex]: {
                       ...players[playerIndex],
-                      fire: {
-                        ...players[playerIndex].fire,
-                        isFired: false,
-                      },
+                      fire: false,
                     },
                     [players.indexOf(player)]: {
                       ...players[players.indexOf(player)],
@@ -175,7 +150,7 @@ const PlayerComponent: React.FC<{
             h={10}
             src={require("../assets/player-image.png")}
           />
-          {player.fire.isFired && (
+          {player.fire && (
             <Flex
               display={player.fire ? "flex" : "none"}
               position="absolute"
