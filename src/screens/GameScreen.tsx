@@ -8,12 +8,10 @@ const socket = io("/");
 
 const GameScreen = () => {
   const [players, setPlayers] = useState<Array<PlayerType>>([]);
-  const [userName, setUserName] = useState<string>("");
   const [begin, setBegin] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [playerIndex, setPlayerIndex] = useState(
-    players.indexOf(players.filter((e) => e.name === userName)[0])
-  );
+  const [userName, setUserName] = useState<string>("");
+  const [playerIndex, setPlayerIndex] = useState<number>(-1);
 
   const handleAddingUser = async () => {
     if (userName) {
@@ -37,20 +35,35 @@ const GameScreen = () => {
       if (res) {
         setPlayers(res);
 
-        if (res[playerIndex].health <= 0) {
-          console.log("dead");
-          setBegin(false);
-          setTimeout(() => {
-            window.location.reload();
-          }, 1000);
+        if (playerIndex > -1) {
+          if (res[playerIndex].health <= 0) {
+            console.log("dead");
+            setBegin(false);
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+          } else {
+            console.log(res[playerIndex].health);
+          }
         }
       }
     });
-  }, []);
+  }, [playerIndex]);
+
+  useEffect(() => {
+    if (begin) {
+      setPlayerIndex(
+        players.indexOf(players.filter((e) => e.name === userName)[0])
+      );
+      console.log(
+        players.indexOf(players.filter((e) => e.name === userName)[0])
+      );
+    }
+  }, [userName, begin, players.length]);
 
   return (
     <>
-      {begin ? (
+      {begin && playerIndex >= 0 ? (
         <Flex
           position="relative"
           w="100%"
@@ -62,7 +75,7 @@ const GameScreen = () => {
             <PlayerComponent
               player={player}
               players={players}
-              playerIndex={playerIndex}
+              playerIndex={players.indexOf(player)}
             />
           ))}
         </Flex>
