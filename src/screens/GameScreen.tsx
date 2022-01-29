@@ -12,7 +12,7 @@ const GameScreen = () => {
   const [begin, setBegin] = useState(false);
   const [loading, setLoading] = useState(false);
   const [playerIndex, setPlayerIndex] = useState(
-    players.findIndex((e) => e.name === userName)
+    players.indexOf(players.filter((e) => e.name === userName)[0])
   );
 
   const handleAddingUser = async () => {
