@@ -1,9 +1,15 @@
 const express = require("express");
-const app = express();
-const server = require("http").createServer(app);
-const io = require("socket.io")(server);
+const path = require("path");
+const socketIO = require("socket.io");
+
+const server = express()
+  .use(express.static(path.join(__dirname, "../build")))
+  .listen(4000, () => {
+    console.log("listening on port: 4000");
+  });
 
 let players = [];
+const io = socketIO(server);
 
 io.on("connection", (socket) => {
   console.log("a user connected");
@@ -32,8 +38,4 @@ io.on("connection", (socket) => {
 
     io.emit("update-players", players);
   });
-});
-
-server.listen(4000, () => {
-  console.log("listening on *:4000");
 });

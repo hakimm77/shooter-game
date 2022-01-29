@@ -4,7 +4,7 @@ import { io } from "socket.io-client";
 import checkCollision from "../helpers/checkCollision";
 import { PlayerType } from "../types";
 
-const socket = io("http://localhost:4000");
+const socket = io("/");
 
 const PlayerComponent: React.FC<{
   player: PlayerType;
