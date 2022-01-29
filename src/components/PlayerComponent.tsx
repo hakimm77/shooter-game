@@ -109,6 +109,10 @@ const PlayerComponent: React.FC<{
                     })
                   );
                 }, 80);
+
+                if (player.health <= 0) {
+                  socket.emit("player-lost", player.id);
+                }
               }
             });
 

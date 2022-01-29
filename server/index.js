@@ -19,13 +19,7 @@ io.on("connection", (socket) => {
   socket.on("update-client", async (res) => {
     players = await res;
 
-    players.forEach((player) => {
-      if (player.health <= 0) {
-        io.emit("player-lost", player.name);
-      }
-    });
-
-    io.emit("update-players", players);
+    io.emit("update-players", res);
   });
 
   socket.on("new-user", (res) => {
@@ -34,9 +28,20 @@ io.on("connection", (socket) => {
     io.emit("update-players", players);
   });
 
-  socket.on("disconnect", () => {
-    const index = players.indexOf(players.filter((e) => e.id === socket.id)[0]);
-    players.splice(index, 1);
+  socket.on("player-lost", (res) => {
+    const index = players.findIndex((e) => e.id === res);
+    if (index > -1) {
+      players.splice(index, 1);
+    }
+
+    io.emit("update-players", players);
+  });
+
+  socket.on("disconnect", async () => {
+    const index = await players.findIndex((e) => e.id === socket.id);
+    if (index > -1) {
+      players.splice(index, 1);
+    }
 
     io.emit("update-players", players);
   });

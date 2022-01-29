@@ -5,4 +5,5 @@ export interface PlayerType {
   direction: number;
   fire: boolean;
   health: number;
+  id: string;
 }

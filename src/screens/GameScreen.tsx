@@ -36,16 +36,12 @@ const GameScreen = () => {
     socket.on("update-players", (res) => {
       if (res) {
         setPlayers(res);
-      }
-    });
 
-    socket.on("player-lost", (res) => {
-      if (res) {
-        if (userName === res) {
-          socket.disconnect();
+        if (res.indexOf(players[playerIndex]) <= -1) {
+          setBegin(false);
           setTimeout(() => {
             window.location.reload();
-          }, 300);
+          }, 1000);
         }
       }
     });
