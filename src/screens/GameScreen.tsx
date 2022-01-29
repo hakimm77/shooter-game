@@ -52,12 +52,7 @@ const GameScreen = () => {
 
   useEffect(() => {
     if (begin) {
-      setPlayerIndex(
-        players.indexOf(players.filter((e) => e.name === userName)[0])
-      );
-      console.log(
-        players.indexOf(players.filter((e) => e.name === userName)[0])
-      );
+      setPlayerIndex(players.findIndex((e) => e.name === userName));
     }
   }, [userName, begin, players.length]);
 
