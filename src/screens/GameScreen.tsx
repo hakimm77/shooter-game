@@ -50,7 +50,7 @@ const GameScreen = () => {
 
   return (
     <>
-      {begin && playerIndex >= 0 ? (
+      {begin ? (
         <Flex
           position="relative"
           w="100%"
