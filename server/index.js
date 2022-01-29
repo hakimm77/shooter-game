@@ -2,9 +2,11 @@ const express = require("express");
 const path = require("path");
 const socketIO = require("socket.io");
 
+const PORT = process.env.PORT || 4000;
+
 const server = express()
   .use(express.static(path.join(__dirname, "../build")))
-  .listen(4000, () => {
+  .listen(PORT, () => {
     console.log("listening on port: 4000");
   });
 
