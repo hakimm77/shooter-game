@@ -9,10 +9,8 @@ const socket = io("/");
 const PlayerComponent: React.FC<{
   player: PlayerType;
   players: Array<PlayerType>;
-  userName: string;
-}> = ({ player, players, userName }) => {
-  let playerIndex = players.findIndex((e) => e.name !== userName);
-
+  playerIndex: number;
+}> = ({ player, players, playerIndex }) => {
   onkeydown = (e) => {
     if (players.length) {
       switch (e.keyCode) {
