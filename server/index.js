@@ -17,9 +17,9 @@ io.on("connection", (socket) => {
   console.log("a user connected");
 
   socket.on("update-client", async (res) => {
-    players = await res;
+    players = await Object.assign([...players], res);
 
-    io.emit("update-players", res);
+    io.emit("update-players", players);
   });
 
   socket.on("new-user", (res) => {
