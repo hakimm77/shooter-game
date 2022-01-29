@@ -42,17 +42,15 @@ const GameScreen = () => {
             setTimeout(() => {
               window.location.reload();
             }, 1000);
-          } else {
-            console.log(res[playerIndex].health);
           }
         }
       }
     });
-  }, [playerIndex]);
+  }, []);
 
   useEffect(() => {
     if (begin) {
-      setPlayerIndex(players.findIndex((e) => e.name === userName));
+      setPlayerIndex(players.findIndex((e) => e.name !== userName));
     }
   }, [userName, begin, players.length]);
 
@@ -70,7 +68,7 @@ const GameScreen = () => {
             <PlayerComponent
               player={player}
               players={players}
-              playerIndex={players.indexOf(player)}
+              playerIndex={/*players.indexOf(player)*/ playerIndex}
             />
           ))}
         </Flex>
