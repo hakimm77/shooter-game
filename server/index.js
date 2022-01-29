@@ -28,15 +28,6 @@ io.on("connection", (socket) => {
     io.emit("update-players", players);
   });
 
-  socket.on("player-lost", (res) => {
-    const index = players.findIndex((e) => e.id === res);
-    if (index > -1) {
-      players.splice(index, 1);
-    }
-
-    io.emit("update-players", players);
-  });
-
   socket.on("disconnect", async () => {
     const index = await players.findIndex((e) => e.id === socket.id);
     if (index > -1) {

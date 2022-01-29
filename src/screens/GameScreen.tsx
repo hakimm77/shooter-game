@@ -33,11 +33,12 @@ const GameScreen = () => {
   };
 
   useEffect(() => {
-    socket.on("update-players", (res) => {
+    socket.on("update-players", async (res) => {
       if (res) {
         setPlayers(res);
 
-        if (res.indexOf(players[playerIndex]) <= -1) {
+        if (res[playerIndex].health <= 0) {
+          console.log("dead");
           setBegin(false);
           setTimeout(() => {
             window.location.reload();
