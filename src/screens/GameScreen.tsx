@@ -62,7 +62,7 @@ const GameScreen = () => {
             <PlayerComponent
               player={player}
               players={players}
-              playerIndex={players.indexOf(player)}
+              userName={userName}
             />
           ))}
         </Flex>
