@@ -11,7 +11,7 @@ const GameScreen = () => {
   const [begin, setBegin] = useState(false);
   const [loading, setLoading] = useState(false);
   const [userName, setUserName] = useState<string>("");
-  const [playerIndex, setPlayerIndex] = useState<number>(-1);
+  let playerIndex = players.findIndex((e) => e.name !== userName);
 
   const handleAddingUser = async () => {
     if (userName) {
@@ -48,12 +48,6 @@ const GameScreen = () => {
     });
   }, []);
 
-  useEffect(() => {
-    if (begin) {
-      setPlayerIndex(players.findIndex((e) => e.name !== userName));
-    }
-  }, [userName, begin, players.length]);
-
   return (
     <>
       {begin && playerIndex >= 0 ? (
@@ -68,7 +62,7 @@ const GameScreen = () => {
             <PlayerComponent
               player={player}
               players={players}
-              playerIndex={/*players.indexOf(player)*/ playerIndex}
+              playerIndex={players.indexOf(player)}
             />
           ))}
         </Flex>
