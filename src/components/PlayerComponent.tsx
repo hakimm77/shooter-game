@@ -1,4 +1,5 @@
 import { Flex, Image, Text } from "@chakra-ui/react";
+import { PLAYER_HEIGHT, PLAYER_WIDTH } from "../constants";
 import { PlayerComponentType } from "../types";
 
 const PlayerComponent = ({ player }: PlayerComponentType) => {
@@ -6,6 +7,7 @@ const PlayerComponent = ({ player }: PlayerComponentType) => {
     <Flex
       position="absolute"
       flexDir="column"
+      transition={"transform 330ms ease-in-out"}
       transform={`translate(${player.x}px, ${player.y}px)`}
       alignItems="center"
     >
@@ -33,8 +35,8 @@ const PlayerComponent = ({ player }: PlayerComponentType) => {
         >
           <Image
             zIndex={2}
-            w={10}
-            h={10}
+            w={PLAYER_WIDTH}
+            h={PLAYER_HEIGHT}
             src={require("../assets/player-image.png")}
           />
           {player.fire && (
